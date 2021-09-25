@@ -2,17 +2,6 @@ const path = require("path");
 const fs = require("fs");
 const child_process = require("child_process");
 const os = require("os");
-const action_core = require("@actions/core");
-
-if (fs.existsSync("./env.json")) {
-  const env = JSON.parse(fs.readFileSync("./env.json"));
-  Object.getOwnPropertyNames(env).forEach(key => {
-    process.env[key] = env[key];
-    action_core.exportVariable(key, env[key]);
-  });
-} else {
-  console.error("env.json not found");
-}
 
 // Clone repo Function
 async function CloneDragonfly(){
