@@ -17,6 +17,7 @@ jobs:
           name: envs
           path: env.json
   Build:
+    needs: [CheckVersion]
     strategy:
       matrix:
         os:
