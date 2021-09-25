@@ -42,7 +42,7 @@ jobs:
         run: node Build.js
       - name: Upload To Releases
         uses: softprops/action-gh-release@v1
-        # if: env.allow_upload == 'true'
+        if: env.allow_upload == 'true'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
