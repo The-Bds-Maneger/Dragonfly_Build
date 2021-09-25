@@ -49,7 +49,7 @@ async function Build(){
   else if (process.platform === "android") arch.push("arm64");
   else throw new Error("Not valid platform");
   for (let Arch of arch) {
-    let OutPutFile = path.join(__dirname, "BuildOut", `Dragonfly_${process.env.dragonfly_version}_${process.platform}_${Arch}`);
+    let OutPutFile = path.join(__dirname, "BuildOut", `Dragonfly_${process.platform}_${Arch}`);
     if (process.platform === "win32") OutPutFile += ".exe";
     await BuildGo(Arch, RepoPath, OutPutFile);
   }
