@@ -1,0 +1,51 @@
+name: Build Dragonfly Binaries
+on: [push]
+
+jobs:
+  CheckVersion:
+    name: Check Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Check version
+        run: node CheckVersion.js
+      - name: Upload envs
+        uses: actions/upload-artifact@v1
+        with:
+          name: envs
+          path: env.json
+  Build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v1
+        name: Install Golang
+        with:
+          go-version: 1.17
+      - name: Download artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: envs
+      - name: Install dependencies
+        run: npm install
+      - name: Build binaries
+        run: node Build.js
+      - name: Upload To Releases
+        uses: softprops/action-gh-release@v1
+        if: env.allow_upload == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: "Dragonfly Minecraft Bedrock ${{ env.dragonfly_version }}"
+          tag_name: "${{ env.dragonfly_version }}"
+          files: |
+            !BuildOut/*.md
+            BuildOut/*

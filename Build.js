@@ -2,6 +2,15 @@ const path = require("path");
 const fs = require("fs");
 const child_process = require("child_process");
 const os = require("os");
+const action_core = require("@actions/core");
+
+if (fs.existsSync(path.join(__dirname, "env.json"))) {
+  const env = require(path.join(__dirname, "env.json"));
+  Object.getOwnPropertyNames(env).forEach(key => {
+    process.env[key] = env[key];
+    action_core.exportVariable(key, env[key]);
+  });
+}
 
 // Clone repo Function
 async function CloneDragonfly(){
@@ -38,7 +47,7 @@ async function Build(){
   else if (process.platform === "android") arch.push("arm64");
   else throw new Error("Not valid platform");
   for (let Arch of arch) {
-    let OutPutFile = path.join(__dirname, "BuildOut", `Dragonfly_${process.platform}_${Arch}`);
+    let OutPutFile = path.join(__dirname, "BuildOut", `Dragonfly_${process.env.dragonfly_version}_${process.platform}_${Arch}`);
     if (process.platform === "win32") OutPutFile += ".exe";
     await BuildGo(Arch, RepoPath, OutPutFile);
   }

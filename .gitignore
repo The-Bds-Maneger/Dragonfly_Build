@@ -1,2 +1,4 @@
 BuildOut/*
 !BuildOut/*.md
+/env.json
+/node_modules
