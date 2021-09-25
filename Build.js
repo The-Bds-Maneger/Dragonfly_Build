@@ -4,8 +4,8 @@ const child_process = require("child_process");
 const os = require("os");
 const action_core = require("@actions/core");
 
-if (fs.existsSync(path.join(__dirname, "env.json"))) {
-  const env = require(path.join(__dirname, "env.json"));
+if (fs.existsSync("./env.json")) {
+  const env = require("./env.json");
   Object.getOwnPropertyNames(env).forEach(key => {
     process.env[key] = env[key];
     action_core.exportVariable(key, env[key]);

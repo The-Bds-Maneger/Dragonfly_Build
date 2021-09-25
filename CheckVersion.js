@@ -11,7 +11,7 @@ async function render(){
     const fs = require("fs");
     fs.writeFileSync("env.json", JSON.stringify({
         dragonfly_version: DragonflyProtocollVersion,
-        allow_upload: release === undefined,
+        allow_upload: `${release === undefined}`,
     }));
 }
 render();
