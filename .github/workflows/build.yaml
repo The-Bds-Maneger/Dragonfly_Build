@@ -51,7 +51,7 @@ jobs:
       - name: Android
         if: matrix.os == 'ubuntu-latest'
         env:
-          GOOS: Android
+          GOOS: android
         run: node Build.js
       - name: Upload To Releases
         uses: softprops/action-gh-release@v1
