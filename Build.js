@@ -34,7 +34,7 @@ async function Build(){
   const arch = [];
   if (process.platform === "linux") {
     if (!(process.env.GOOS)) arch.push("amd64", "arm64", "386", "arm");
-    else arch.push("arm64", "arm");
+    else arch.push("arm64", "amd64");
   }
   else if (process.platform === "win32") arch.push("amd64", "386");
   else if (process.platform === "darwin") arch.push("amd64", "arm64");
