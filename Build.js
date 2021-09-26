@@ -32,7 +32,10 @@ function BuildGo(arch = "", RepoPath = "", Out = ""){
 async function Build(){
   const RepoPath = await CloneDragonfly();
   const arch = [];
-  if (process.platform === "linux") arch.push("amd64", "arm64", "386");
+  if (process.platform === "linux") {
+    if (!(process.env.GOOS)) arch.push("amd64", "arm64", "386", "arm");
+    else arch.push("amd64", "arm64");
+  }
   else if (process.platform === "win32") arch.push("amd64", "386");
   else if (process.platform === "darwin") arch.push("amd64", "arm64");
   else if (process.platform === "android") arch.push("arm64");
