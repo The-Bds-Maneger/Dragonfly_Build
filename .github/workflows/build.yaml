@@ -47,11 +47,9 @@ jobs:
         run: node loadenv.js
       - name: Build binaries
         if: env.allow_upload == 'true'
-        id: build
         run: node Build.js
       - name: Android
-        needs: build
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && env.allow_upload == 'true'
         env:
           GOOS: android
         run: node Build.js
